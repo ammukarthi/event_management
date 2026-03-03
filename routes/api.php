@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,5 +51,19 @@ Route::middleware(['auth:sanctum','role:organizer'])->group(function () {
     Route::put('/tickets/{id}',[EventController::class,'editTickets']);
 
     Route::delete('/tickets/{id}',[EventController::class,'ticketdelete']);
+
+});
+
+Route::middleware(['auth:sanctum','role:customer'])->group(function () {
+
+    Route::post('/tickets/{ticket_id}/bookings',[BookingController::class,'bookTicket']);
+
+    Route::get('/bookings',[BookingController::class,'bookingHistory']);
+
+    Route::put('/bookings/{booking_id}/cancel',[BookingController::class,'cancel']);
+
+    Route::post('/bookings/{booking_id}/payment',[BookingController::class,'paymentProcess']);
+
+    Route::get('/payments/{id}',[BookingController::class,'paymentDetail']);
 
 });

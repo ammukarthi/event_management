@@ -208,6 +208,14 @@ class EventController extends Controller
 
         $ticket = Ticket::findOrFail($id);
 
+        if ($ticket->bookings()->exists()) {
+            // If there are bookings, don't allow deletion
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ticket cannot be deleted because it has bookings.'
+            ], 403);
+        }
+
         $ticket->delete();
 
         return response()->json([
