@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
     use HasFactory;
+
+    public function event(){
+
+        return $this->belongsTo(Event::class);
+    }
+
+    public function bookings(){
+        
+        return $this->hasMany(Booking::class);
+    }
 }

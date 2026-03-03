@@ -34,3 +34,21 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/events/{id}',[EventController::class,'view']);
 });
+
+Route::middleware(['auth:sanctum','role:organizer'])->group(function () {
+
+    Route::get('/orgEvents',[EventController::class,'organizerEvents']);
+
+    Route::post('/events',[EventController::class,'addEvents']);
+
+    Route::put('/events/{id}',[EventController::class,'editEvents']);
+
+    Route::delete('/events/{id}',[EventController::class,'delete']);
+
+    Route::post('/events/{event_id}/tickets',[EventController::class,'addTickets']);
+
+    Route::put('/tickets/{id}',[EventController::class,'editTickets']);
+
+    Route::delete('/tickets/{id}',[EventController::class,'ticketdelete']);
+
+});
